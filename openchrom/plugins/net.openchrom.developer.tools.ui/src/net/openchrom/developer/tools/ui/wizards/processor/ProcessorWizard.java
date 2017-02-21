@@ -43,7 +43,7 @@ public class ProcessorWizard extends Wizard implements INewWizard {
 
 	public boolean performFinish() {
 
-		IRunnableWithProgress op = new IRunnableWithProgress() {
+		IRunnableWithProgress runnable = new IRunnableWithProgress() {
 
 			public void run(IProgressMonitor monitor) throws InvocationTargetException {
 
@@ -56,8 +56,9 @@ public class ProcessorWizard extends Wizard implements INewWizard {
 				}
 			}
 		};
+		//
 		try {
-			getContainer().run(true, false, op);
+			getContainer().run(true, false, runnable);
 		} catch(InterruptedException e) {
 			return false;
 		} catch(InvocationTargetException e) {

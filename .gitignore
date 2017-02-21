@@ -1,0 +1,14 @@
+openchrom/plugins/net.openchrom.developer.tools.fragment.test/Openchrom.log
+openchrom/plugins/net.openchrom.developer.tools.fragment.test/*.log
+openchrom/plugins/net.openchrom.developer.tools.fragment.test/bin/*
+openchrom/plugins/net.openchrom.developer.tools.ui/bin/*
+openchrom/plugins/net.openchrom.developer.tools/bin/*
+openchrom/plugins/net.openchrom.developer.tools.ui.fragment.test/bin/*
+openchrom/sites/net.openchrom.developer.tools.site/artifacts.jar
+openchrom/sites/net.openchrom.developer.tools.site/content.jar
+openchrom/sites/net.openchrom.developer.tools.site/features/*
+openchrom/sites/net.openchrom.developer.tools.site/plugins/*
+openchrom/features/net.openchrom.developer.tools.feature/target/
+openchrom/plugins/net.openchrom.developer.tools.ui/target/
+openchrom/plugins/net.openchrom.developer.tools/target/
+openchrom/sites/net.openchrom.developer.tools.updateSite/target/

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="OpenChrom Developer Tools"
+            id="net.openchrom.developer.tools.ui">
+      </category>
+      <wizard
+            name="New Processor"
+            icon="icons/processor.png"
+            category="net.openchrom.developer.tools.ui"
+            class="net.openchrom.developer.tools.ui.wizards.processor.ProcessorWizard"
+            id="net.openchrom.developer.tools.ui.wizards.ProcessorWizard">
+      </wizard>
+   </extension>
+
+</plugin>

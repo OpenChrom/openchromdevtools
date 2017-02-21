@@ -24,6 +24,8 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 
+import net.openchrom.developer.tools.ui.core.BundleComposition;
+
 public class ProcessorWizard extends Wizard implements INewWizard {
 
 	private ProcessorWizardPage processorWizardPage;
@@ -69,10 +71,10 @@ public class ProcessorWizard extends Wizard implements INewWizard {
 	private void doFinish(IProgressMonitor monitor) throws CoreException {
 
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		final String idnName = processorWizardPage.getIdnName();
+		BundleComposition bundleComposition = processorWizardPage.getBundleComposition();
 		//
 		System.out.println(root);
-		System.out.println(idnName);
+		System.out.println(bundleComposition.getBundleModel());
 		/*
 		 * Validate the workspace.
 		 */

@@ -23,21 +23,30 @@ import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import net.openchrom.developer.tools.ui.core.BundleComposition;
+
 public class ProcessorWizardPage extends WizardPage {
 
-	private Text idnText; // net.openchrom.chromatogram.msd.processor.supplier....
+	private Text domainNameText; // net.openchrom.chromatogram.msd.processor.supplier....
+	private Combo detectorTypeCombo; // msd
+	private Text processorNameText; // myprocessor
+	//
+	private Text bundleModelText;
+	private Text bundleUIText;
+	private Text bundleTestFragmentText;
+	private Text bundleFeatureText;
+	private Text bundleCBIText;
+	private Text bundleUpdateSiteText;
 
-	/**
-	 * Constructor for SampleNewWizardPage.
-	 * 
-	 * @param pageName
-	 */
 	public ProcessorWizardPage() {
 		super("wizardPage");
 		setTitle("OpenChrom Processor");
@@ -49,32 +58,43 @@ public class ProcessorWizardPage extends WizardPage {
 	 */
 	public void createControl(Composite parent) {
 
-		Composite container = new Composite(parent, SWT.NULL);
+		Composite composite = new Composite(parent, SWT.NULL);
 		GridLayout layout = new GridLayout();
-		container.setLayout(layout);
-		layout.numColumns = 3;
+		composite.setLayout(layout);
+		layout.numColumns = 2;
 		layout.verticalSpacing = 9;
 		//
-		createIdnSection(container);
+		createDomainNameSection(composite);
+		createDetectorTypeSection(composite);
+		createProcessorNameSection(composite);
+		createBundleCompositionSection(composite);
 		//
 		initialize();
 		dialogChanged();
-		setControl(container);
+		setControl(composite);
 	}
 
-	public String getIdnName() {
+	public BundleComposition getBundleComposition() {
 
-		return idnText.getText().trim();
+		/*
+		 * [net.openchrom.chromatogram].xxd.[processor.supplier].myprocessor
+		 */
+		String domainName = domainNameText.getText().trim();
+		String detectorType = detectorTypeCombo.getText().trim();
+		String pluginType = "processor.supplier";
+		String processorName = processorNameText.getText().trim();
+		//
+		return new BundleComposition(domainName, detectorType, pluginType, processorName);
 	}
 
-	private void createIdnSection(Composite composite) {
+	private void createDomainNameSection(Composite composite) {
 
 		Label label = new Label(composite, SWT.NULL);
-		label.setText("&IDN:");
+		label.setText("Domain Name:");
 		//
-		idnText = new Text(composite, SWT.BORDER | SWT.SINGLE);
-		idnText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		idnText.addModifyListener(new ModifyListener() {
+		domainNameText = new Text(composite, SWT.BORDER | SWT.SINGLE);
+		domainNameText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		domainNameText.addModifyListener(new ModifyListener() {
 
 			public void modifyText(ModifyEvent e) {
 
@@ -83,12 +103,82 @@ public class ProcessorWizardPage extends WizardPage {
 		});
 	}
 
+	private void createDetectorTypeSection(Composite composite) {
+
+		Label label = new Label(composite, SWT.NULL);
+		label.setText("Detector Type:");
+		//
+		detectorTypeCombo = new Combo(composite, SWT.BORDER | SWT.READ_ONLY);
+		detectorTypeCombo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		detectorTypeCombo.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				dialogChanged();
+			}
+		});
+	}
+
+	private void createProcessorNameSection(Composite composite) {
+
+		Label label = new Label(composite, SWT.NULL);
+		label.setText("Processor Name:");
+		//
+		processorNameText = new Text(composite, SWT.BORDER | SWT.SINGLE);
+		processorNameText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		processorNameText.addModifyListener(new ModifyListener() {
+
+			public void modifyText(ModifyEvent e) {
+
+				dialogChanged();
+			}
+		});
+	}
+
+	private void createBundleCompositionSection(Composite composite) {
+
+		Label label = new Label(composite, SWT.NULL);
+		label.setText("Final Bundle Composition:");
+		GridData gridData = getGridData();
+		gridData.verticalIndent = 10;
+		label.setLayoutData(gridData);
+		//
+		bundleModelText = new Text(composite, SWT.BORDER | SWT.READ_ONLY);
+		bundleModelText.setLayoutData(getGridData());
+		//
+		bundleUIText = new Text(composite, SWT.BORDER | SWT.READ_ONLY);
+		bundleUIText.setLayoutData(getGridData());
+		//
+		bundleTestFragmentText = new Text(composite, SWT.BORDER | SWT.READ_ONLY);
+		bundleTestFragmentText.setLayoutData(getGridData());
+		//
+		bundleFeatureText = new Text(composite, SWT.BORDER | SWT.READ_ONLY);
+		bundleFeatureText.setLayoutData(getGridData());
+		//
+		bundleCBIText = new Text(composite, SWT.BORDER | SWT.READ_ONLY);
+		bundleCBIText.setLayoutData(getGridData());
+		//
+		bundleUpdateSiteText = new Text(composite, SWT.BORDER | SWT.READ_ONLY);
+		bundleUpdateSiteText.setLayoutData(getGridData());
+	}
+
+	private GridData getGridData() {
+
+		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
+		gridData.horizontalSpan = 2;
+		return gridData;
+	}
+
 	/**
 	 * Tests if the current workbench selection is a suitable container to use.
 	 */
 	private void initialize() {
 
-		idnText.setText("net.openchrom.chromatogram.xxd.processor.supplier.myproc");
+		domainNameText.setText("net.openchrom.chromatogram");
+		detectorTypeCombo.setItems(new String[]{"msd", "csd", "wsd", "xxd"});
+		detectorTypeCombo.select(0);
+		processorNameText.setText("myprocessor");
 	}
 
 	/**
@@ -96,7 +186,16 @@ public class ProcessorWizardPage extends WizardPage {
 	 */
 	private void dialogChanged() {
 
-		String idnName = getIdnName();
+		BundleComposition bundleComposition = getBundleComposition();
+		/*
+		 * Set the text fields.
+		 */
+		bundleModelText.setText(bundleComposition.getBundleModel());
+		bundleUIText.setText(bundleComposition.getBundleUI());
+		bundleTestFragmentText.setText(bundleComposition.getBundleTestFragment());
+		bundleFeatureText.setText(bundleComposition.getBundleFeature());
+		bundleCBIText.setText(bundleComposition.getBundleCBI());
+		bundleUpdateSiteText.setText(bundleComposition.getBundleUpdateSite());
 		/*
 		 * Is a workspace available?
 		 */
@@ -106,33 +205,15 @@ public class ProcessorWizardPage extends WizardPage {
 			return;
 		}
 		/*
-		 * IDN
+		 * Validate that no plug-in with the same name already exists.
 		 */
-		if(idnName.length() == 0) {
-			updateStatus("IDN must be specified");
-			return;
-		}
-		if(idnName.replace('\\', '/').indexOf('/', 1) > 0) {
-			updateStatus("IDN must be valid");
-			return;
-		}
-		/*
-		 * Validate that no plugin with the same name already exists.
-		 */
-		String bundleModel = idnName;
-		String bundleUI = idnName + ".ui";
-		String bundleTestFragment = idnName + ".fragment.test";
-		String bundleFeature = idnName + ".feature";
-		String bundleCBI = idnName + ".cbi";
-		String bundleUpdateSite = idnName + ".updateSite";
-		//
 		List<String> bundles = new ArrayList<String>();
-		bundles.add(bundleModel);
-		bundles.add(bundleUI);
-		bundles.add(bundleTestFragment);
-		bundles.add(bundleFeature);
-		bundles.add(bundleCBI);
-		bundles.add(bundleUpdateSite);
+		bundles.add(bundleComposition.getBundleModel());
+		bundles.add(bundleComposition.getBundleUI());
+		bundles.add(bundleComposition.getBundleTestFragment());
+		bundles.add(bundleComposition.getBundleFeature());
+		bundles.add(bundleComposition.getBundleCBI());
+		bundles.add(bundleComposition.getBundleUpdateSite());
 		//
 		for(String bundle : bundles) {
 			if(!validateBundle(root, bundle)) {

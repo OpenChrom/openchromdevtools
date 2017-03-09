@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="__domain.name__.__detector.type__.processor.supplier.__processor.name__.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+</plugin>

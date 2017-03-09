@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/__domain.name__.__detector.type__.processor.supplier.__processor.name__.feature_1.2.0.qualifier.jar" id="__domain.name__.__detector.type__.processor.supplier.__processor.name__.feature" version="1.2.0.qualifier">
+      <category name="org.eclipse.chemclipse.xxd.process.supplier"/>
+   </feature>
+   <category-def name="org.eclipse.chemclipse.xxd.process.supplier" label="Process Supplier"/>
+</site>

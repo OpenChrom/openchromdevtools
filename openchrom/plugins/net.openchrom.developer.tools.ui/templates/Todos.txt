@@ -1,0 +1,13 @@
+__domain.name__.__detector.type__.processor.supplier.__processor.name__
+__domain.name__.__detector.type__.processor.supplier.__processor.name__.ui
+__domain.name__.__detector.type__.processor.supplier.__processor.name__.fragment.test
+__domain.name__.__detector.type__.processor.supplier.__processor.name__.feature
+__domain.name__.__detector.type__.processor.supplier.__processor.name__.cbi
+__domain.name__.__detector.type__.processor.supplier.__processor.name__.updateSite
+
+Version
+Name (Model / UI)
+Vendor
+Company
+Contributor
+Description

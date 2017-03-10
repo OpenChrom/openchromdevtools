@@ -13,6 +13,11 @@ package net.openchrom.developer.tools.ui.core;
 
 public class BundleComposition {
 
+	private String domainName;
+	private String detectorType;
+	private String pluginType;
+	private String processorName;
+	//
 	private String bundleModel;
 	private String bundleUI;
 	private String bundleTestFragment;
@@ -24,6 +29,11 @@ public class BundleComposition {
 		/*
 		 * Get the base name.
 		 */
+		this.domainName = domainName;
+		this.detectorType = detectorType;
+		this.pluginType = pluginType;
+		this.processorName = processorName;
+		//
 		StringBuilder builder = new StringBuilder();
 		builder.append(domainName);
 		builder.append(".");
@@ -42,6 +52,26 @@ public class BundleComposition {
 		bundleFeature = bundleBaseName + ".feature";
 		bundleCBI = bundleBaseName + ".cbi";
 		bundleUpdateSite = bundleBaseName + ".updateSite";
+	}
+
+	public String getDomainName() {
+
+		return domainName;
+	}
+
+	public String getDetectorType() {
+
+		return detectorType;
+	}
+
+	public String getPluginType() {
+
+		return pluginType;
+	}
+
+	public String getProcessorName() {
+
+		return processorName;
 	}
 
 	public String getBundleModel() {

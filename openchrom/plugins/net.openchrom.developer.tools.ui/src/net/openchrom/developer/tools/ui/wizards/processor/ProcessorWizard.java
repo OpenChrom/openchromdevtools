@@ -24,7 +24,9 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 
+import net.openchrom.developer.tools.ui.PathResolver;
 import net.openchrom.developer.tools.ui.core.BundleComposition;
+import net.openchrom.developer.tools.ui.core.TemplateTransformer;
 
 public class ProcessorWizard extends Wizard implements INewWizard {
 
@@ -73,16 +75,23 @@ public class ProcessorWizard extends Wizard implements INewWizard {
 
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		BundleComposition bundleComposition = processorWizardPage.getBundleComposition();
-		//
-		System.out.println(root);
-		System.out.println(bundleComposition.getBundleModel());
 		/*
 		 * Validate the workspace.
 		 */
-		monitor.beginTask("Creating the processor", 2);
-		monitor.worked(1);
-		monitor.setTaskName("Opening file for editing...");
-		monitor.worked(1);
+		try {
+			monitor.beginTask("Creating the processor", 2);
+			monitor.worked(1);
+			//
+			TemplateTransformer templateTransformer = new TemplateTransformer();
+			String templateDirectory = PathResolver.getAbsolutePath("templates/processor");
+			String targetDirectory = root.getLocation().toFile().toString();
+			templateTransformer.copy(templateDirectory, targetDirectory, bundleComposition);
+			//
+			monitor.setTaskName("Opening file for editing...");
+			monitor.worked(1);
+		} catch(Exception e) {
+			System.out.println(e);
+		}
 	}
 
 	@Override

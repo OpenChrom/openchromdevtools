@@ -24,14 +24,14 @@ public class TemplateTransformer {
 	public static final String PLACEHOLDER_PLUGIN_TYPE = "__plugintype__";
 	public static final String PLACEHOLDER_PLUGIN_NAME = "__pluginname__";
 
-	public void copy(String templateDirectory, String targetDirectory, BundleComposition bundleComposition) {
+	public void copy(String templateDirectoryPath, String targetDirectoryPath, BundleComposition bundleComposition) {
 
-		File template = new File(templateDirectory);
-		File target = new File(targetDirectory);
+		File templateDirectory = new File(templateDirectoryPath);
+		File targetDirectory = new File(targetDirectoryPath);
 		//
-		if(template.isDirectory() && target.isDirectory()) {
+		if(templateDirectory.isDirectory() && targetDirectory.isDirectory()) {
 			try {
-				copyFiles(bundleComposition, template, target);
+				copyFiles(bundleComposition, templateDirectory, targetDirectory);
 			} catch(IOException e) {
 				System.out.println(e);
 			}
@@ -41,34 +41,18 @@ public class TemplateTransformer {
 	private void copyFiles(BundleComposition bundleComposition, File template, File rootDirectory) throws IOException {
 
 		if(template.isDirectory()) {
-			//
 			for(File fileTemplate : template.listFiles()) {
-				String modifiedName = getModifiedFileName(fileTemplate.getName(), bundleComposition);
 				if(fileTemplate.isDirectory()) {
-					/*
-					 * Create a new directory
-					 */
-					File targetDirectory = new File(rootDirectory.getAbsolutePath() + File.separator + modifiedName);
-					if(!targetDirectory.exists()) {
-						targetDirectory.mkdir();
-					}
-					/*
-					 * Copy the contained files.
-					 */
+					String modifiedDirectoryName = getModifiedFileName(fileTemplate.getName(), bundleComposition);
+					File targetDirectory = new File(rootDirectory.getAbsolutePath() + File.separator + modifiedDirectoryName);
 					for(File fileTarget : fileTemplate.listFiles()) {
 						copyFiles(bundleComposition, fileTarget, targetDirectory);
 					}
 				} else {
-					/*
-					 * Copy the content.
-					 */
 					copyTemplate(bundleComposition, fileTemplate, rootDirectory);
 				}
 			}
 		} else {
-			/*
-			 * Copy the content.
-			 */
 			copyTemplate(bundleComposition, template, rootDirectory);
 		}
 	}
@@ -80,8 +64,18 @@ public class TemplateTransformer {
 
 	private void copyTemplate(BundleComposition bundleComposition, File fileTemplate, File rootDirectory) throws IOException {
 
-		String modifiedName = getModifiedFileName(fileTemplate.getName(), bundleComposition);
-		File fileTarget = new File(rootDirectory.getAbsolutePath() + File.separator + modifiedName);
+		String modifiedFileName = getModifiedFileName(fileTemplate.getName(), bundleComposition);
+		File fileTarget = new File(rootDirectory.getAbsolutePath() + File.separator + modifiedFileName);
+		File parentDirectory = fileTarget.getParentFile();
+		/*
+		 * If parent directory doesn't exits, create it.
+		 */
+		if(!parentDirectory.exists()) {
+			parentDirectory.mkdirs();
+		}
+		/*
+		 * Create the file and copy the content.
+		 */
 		if(!fileTarget.exists()) {
 			try {
 				if(fileTarget.createNewFile()) {

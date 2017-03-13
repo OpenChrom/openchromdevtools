@@ -38,8 +38,8 @@ public class TemplateTransformer_1_ITest extends TestCase {
 		String pluginType = "processor.supplier";
 		String pluginName = "massshiftdetector";
 		//
-		String templateDirectory = "/home/pwenig/www.lablicate.com/Development/workspace/openchromdevtools/openchrom/plugins/net.openchrom.developer.tools.ui/templates/processor";
-		String targetDirectory = "/home/pwenig/Downloads/TT";
+		String templateDirectory = "TODO-SET";
+		String targetDirectory = "TODO-SET";
 		//
 		BundleComposition bundleComposition = new BundleComposition(domainName, detectorType, pluginType, pluginName);
 		templateTransformer.copy(templateDirectory, targetDirectory, bundleComposition);

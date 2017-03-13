@@ -11,25 +11,12 @@
  *******************************************************************************/
 package net.openchrom.developer.tools.ui;
 
-import org.osgi.framework.BundleActivator;
-import org.osgi.framework.BundleContext;
+/**
+ * THIS CLASS IS NOT SUITED FOR PRODUCTIVE USE!<br/>
+ * IT IS A TESTCLASS!
+ */
+public class TestPathHelper extends PathResolver {
 
-public class Activator implements BundleActivator {
-
-	private static BundleContext context;
-
-	public static BundleContext getContext() {
-
-		return context;
-	}
-
-	public void start(BundleContext bundleContext) throws Exception {
-
-		Activator.context = bundleContext;
-	}
-
-	public void stop(BundleContext bundleContext) throws Exception {
-
-		Activator.context = null;
-	}
+	public static final String TEMPLATE_DIRECTORY_PROCESSOR = "templates/processor";
+	public static final String EXPORT_DIRECTORY_PROCESSOR = "templates/export/processor";
 }

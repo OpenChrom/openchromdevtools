@@ -11,6 +11,8 @@
  *******************************************************************************/
 package net.openchrom.developer.tools.ui.core;
 
+import net.openchrom.developer.tools.ui.TestPathHelper;
+
 import junit.framework.TestCase;
 
 public class TemplateTransformer_1_ITest extends TestCase {
@@ -38,8 +40,8 @@ public class TemplateTransformer_1_ITest extends TestCase {
 		String pluginType = "processor.supplier";
 		String pluginName = "massshiftdetector";
 		//
-		String templateDirectory = "TODO-SET";
-		String targetDirectory = "TODO-SET";
+		String templateDirectory = TestPathHelper.getAbsolutePath(TestPathHelper.TEMPLATE_DIRECTORY_PROCESSOR);
+		String targetDirectory = TestPathHelper.getAbsolutePath(TestPathHelper.EXPORT_DIRECTORY_PROCESSOR);
 		//
 		BundleComposition bundleComposition = new BundleComposition(domainName, detectorType, pluginType, pluginName);
 		templateTransformer.copy(templateDirectory, targetDirectory, bundleComposition);

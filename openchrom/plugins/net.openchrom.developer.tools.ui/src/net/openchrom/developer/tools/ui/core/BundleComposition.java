@@ -16,7 +16,7 @@ public class BundleComposition {
 	private String domainName;
 	private String detectorType;
 	private String pluginType;
-	private String processorName;
+	private String pluginName;
 	//
 	private String bundleModel;
 	private String bundleUI;
@@ -25,14 +25,14 @@ public class BundleComposition {
 	private String bundleCBI;
 	private String bundleUpdateSite;
 
-	public BundleComposition(String domainName, String detectorType, String pluginType, String processorName) {
+	public BundleComposition(String domainName, String detectorType, String pluginType, String pluginName) {
 		/*
 		 * Get the base name.
 		 */
 		this.domainName = domainName;
 		this.detectorType = detectorType;
 		this.pluginType = pluginType;
-		this.processorName = processorName;
+		this.pluginName = pluginName;
 		//
 		StringBuilder builder = new StringBuilder();
 		builder.append(domainName);
@@ -41,7 +41,7 @@ public class BundleComposition {
 		builder.append(".");
 		builder.append(pluginType);
 		builder.append(".");
-		builder.append(processorName);
+		builder.append(pluginName);
 		String bundleBaseName = builder.toString();
 		/*
 		 * Create the bundle names.
@@ -69,9 +69,9 @@ public class BundleComposition {
 		return pluginType;
 	}
 
-	public String getProcessorName() {
+	public String getPluginName() {
 
-		return processorName;
+		return pluginName;
 	}
 
 	public String getBundleModel() {

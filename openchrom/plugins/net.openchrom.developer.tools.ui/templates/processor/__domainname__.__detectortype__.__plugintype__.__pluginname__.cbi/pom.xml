@@ -19,9 +19,9 @@
   <!--
 	DESCRIPTION
   --> 
-  <name>OpenChrom Developer Tools</name>
+  <name>OpenChrom Processing ...</name>
   <description>
-	IDE support to create plugins.
+	This processing plugin offers ...
   </description>
   <!--
 	LICENSES
@@ -50,9 +50,9 @@
 	MODULES
   -->
   <modules>
-    <module>../../plugins/net.openchrom.developer.tools.ui</module>
-    <!-- <module>../../plugins/net.openchrom.developer.tools.ui.fragment.test</module> -->
-    <module>../../features/net.openchrom.developer.tools.feature</module>
-    <module>../../sites/net.openchrom.developer.tools.updateSite</module>    
+    <module>../../plugins/__domainname__.__detectortype__.__plugintype__.__pluginname__</module>
+    <module>../../plugins/__domainname__.__detectortype__.__plugintype__.__pluginname__.ui</module>
+    <module>../../features/__domainname__.__detectortype__.__plugintype__.__pluginname__.feature</module>
+    <!--<module>../../plugins/__domainname__.__detectortype__.__plugintype__.__pluginname__.fragment.test</module>-->
   </modules>
 </project>

@@ -31,21 +31,21 @@ public class TemplateTransformer {
 	//
 	private static final String SRC_FOLDER = "/src/";
 
-	public void copy(String pathTemplateZIP, String pathExportDirectory, BundleComposition bundleComposition) {
+	public void copy(String pathTemplateZIP, String pathExportDirectory, BundleSpecification bundleSpecification) {
 
 		File templateZIP = new File(pathTemplateZIP);
 		File exportDirectory = new File(pathExportDirectory);
 		//
 		if(templateZIP.isFile() && exportDirectory.isDirectory()) {
 			try {
-				copyFiles(bundleComposition, templateZIP, exportDirectory);
+				copyFiles(bundleSpecification, templateZIP, exportDirectory);
 			} catch(IOException e) {
 				System.out.println(e);
 			}
 		}
 	}
 
-	private void copyFiles(BundleComposition bundleComposition, File templateZIP, File exportDirectory) throws IOException {
+	private void copyFiles(BundleSpecification bundleSpecification, File templateZIP, File exportDirectory) throws IOException {
 
 		ZipFile zipFile = new ZipFile(templateZIP);
 		try {
@@ -54,10 +54,10 @@ public class TemplateTransformer {
 				ZipEntry zipEntry = zipEntries.nextElement();
 				if(zipEntry.isDirectory()) {
 					if(!zipEntry.getName().contains(SRC_FOLDER)) {
-						createExportDirectory(bundleComposition, zipEntry.getName(), exportDirectory);
+						createExportDirectory(bundleSpecification, zipEntry.getName(), exportDirectory);
 					}
 				} else {
-					copyTemplate(bundleComposition, zipFile, zipEntry, exportDirectory);
+					copyTemplate(bundleSpecification, zipFile, zipEntry, exportDirectory);
 				}
 			}
 		} finally {
@@ -65,12 +65,12 @@ public class TemplateTransformer {
 		}
 	}
 
-	private String getModifiedFileName(BundleComposition bundleComposition, String fileName) {
+	private String getModifiedFileName(BundleSpecification bundleSpecification, String fileName) {
 
-		return getModifiedLine(bundleComposition, fileName);
+		return getModifiedLine(bundleSpecification.getBundleComposition(), fileName);
 	}
 
-	private void createExportDirectory(BundleComposition bundleComposition, String templateName, File exportDirectory) {
+	private void createExportDirectory(BundleSpecification bundleComposition, String templateName, File exportDirectory) {
 
 		String modifiedFileName = getModifiedFileName(bundleComposition, templateName);
 		File targetDirectory = new File(exportDirectory.getAbsolutePath() + File.separator + modifiedFileName);
@@ -80,14 +80,14 @@ public class TemplateTransformer {
 		}
 	}
 
-	private void copyTemplate(BundleComposition bundleComposition, ZipFile zipFile, ZipEntry zipEntry, File exportDirectory) throws IOException {
+	private void copyTemplate(BundleSpecification bundleSpecification, ZipFile zipFile, ZipEntry zipEntry, File exportDirectory) throws IOException {
 
 		if(!zipEntry.isDirectory()) {
 			/*
 			 * Note: src files need to be handled in a different way.
 			 */
 			if(zipEntry.getName().contains(SRC_FOLDER)) {
-				String modifiedFileName = getModifiedFileName(bundleComposition, zipEntry.getName());
+				String modifiedFileName = getModifiedFileName(bundleSpecification, zipEntry.getName());
 				int indexSrc = modifiedFileName.indexOf(SRC_FOLDER);
 				String part1 = modifiedFileName.substring(0, indexSrc);
 				String tmp = modifiedFileName.substring(indexSrc, modifiedFileName.length());
@@ -96,16 +96,16 @@ public class TemplateTransformer {
 				String part3 = tmp.substring(indexSlash, tmp.length());
 				//
 				File fileTarget = new File(exportDirectory.getAbsolutePath() + File.separator + part1 + part2 + part3);
-				copyTarget(bundleComposition, zipFile, zipEntry, fileTarget);
+				copyTarget(bundleSpecification, zipFile, zipEntry, fileTarget);
 			} else {
-				String modifiedFileName = getModifiedFileName(bundleComposition, zipEntry.getName());
+				String modifiedFileName = getModifiedFileName(bundleSpecification, zipEntry.getName());
 				File fileTarget = new File(exportDirectory.getAbsolutePath() + File.separator + modifiedFileName);
-				copyTarget(bundleComposition, zipFile, zipEntry, fileTarget);
+				copyTarget(bundleSpecification, zipFile, zipEntry, fileTarget);
 			}
 		}
 	}
 
-	private void copyTarget(BundleComposition bundleComposition, ZipFile zipFile, ZipEntry zipEntry, File fileTarget) {
+	private void copyTarget(BundleSpecification bundleSpecification, ZipFile zipFile, ZipEntry zipEntry, File fileTarget) {
 
 		/*
 		 * If parent directory doesn't exits, create it.
@@ -120,7 +120,7 @@ public class TemplateTransformer {
 		if(!fileTarget.exists()) {
 			try {
 				if(fileTarget.createNewFile()) {
-					transferFileContent(bundleComposition, zipFile, zipEntry, fileTarget);
+					transferFileContent(bundleSpecification, zipFile, zipEntry, fileTarget);
 				}
 			} catch(IOException e) {
 				System.out.println(e);
@@ -128,7 +128,7 @@ public class TemplateTransformer {
 		}
 	}
 
-	private void transferFileContent(BundleComposition bundleComposition, ZipFile zipFile, ZipEntry zipEntry, File fileTarget) throws IOException {
+	private void transferFileContent(BundleSpecification bundleSpecification, ZipFile zipFile, ZipEntry zipEntry, File fileTarget) throws IOException {
 
 		if(!zipEntry.isDirectory()) {
 			DataInputStream dataInputStream = new DataInputStream(new BufferedInputStream(zipFile.getInputStream(zipEntry)));
@@ -139,7 +139,7 @@ public class TemplateTransformer {
 			try {
 				String line;
 				while((line = bufferedReader.readLine()) != null) {
-					printWriter.println(getModifiedLine(bundleComposition, line));
+					printWriter.println(getModifiedLine(bundleSpecification.getBundleComposition(), line));
 				}
 			} catch(Exception e) {
 				System.out.println(e);

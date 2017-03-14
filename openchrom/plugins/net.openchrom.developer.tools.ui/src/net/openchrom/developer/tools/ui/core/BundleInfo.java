@@ -11,12 +11,11 @@
  *******************************************************************************/
 package net.openchrom.developer.tools.ui.core;
 
-public class BundleMiscellaneous {
+public class BundleInfo {
 
 	private String license;
 	private String version;
 	private String vendor;
-	private String company;
 	private String contributor;
 	private String description;
 
@@ -48,16 +47,6 @@ public class BundleMiscellaneous {
 	public void setVendor(String vendor) {
 
 		this.vendor = vendor;
-	}
-
-	public String getCompany() {
-
-		return company;
-	}
-
-	public void setCompany(String company) {
-
-		this.company = company;
 	}
 
 	public String getContributor() {

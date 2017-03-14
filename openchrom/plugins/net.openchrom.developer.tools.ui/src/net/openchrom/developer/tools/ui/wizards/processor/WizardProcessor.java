@@ -26,11 +26,14 @@ import org.eclipse.ui.IWorkbench;
 
 import net.openchrom.developer.tools.ui.PathResolver;
 import net.openchrom.developer.tools.ui.core.BundleComposition;
+import net.openchrom.developer.tools.ui.core.BundleInfo;
+import net.openchrom.developer.tools.ui.core.BundleSpecification;
 import net.openchrom.developer.tools.ui.core.TemplateTransformer;
 
 public class WizardProcessor extends Wizard implements INewWizard {
 
-	private PageBundleComposition processorWizardPage;
+	private PageBundleComposition pageBundleComposition;
+	private PageBundleInfo pageBundleInfo;
 
 	public WizardProcessor() {
 		super();
@@ -39,8 +42,11 @@ public class WizardProcessor extends Wizard implements INewWizard {
 
 	public void addPages() {
 
-		processorWizardPage = new PageBundleComposition();
-		addPage(processorWizardPage);
+		pageBundleComposition = new PageBundleComposition();
+		pageBundleInfo = new PageBundleInfo();
+		//
+		addPage(pageBundleComposition);
+		addPage(pageBundleInfo);
 	}
 
 	public boolean performFinish() {
@@ -74,7 +80,9 @@ public class WizardProcessor extends Wizard implements INewWizard {
 	private void doFinish(IProgressMonitor monitor) throws CoreException {
 
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		BundleComposition bundleComposition = processorWizardPage.getBundleComposition();
+		BundleComposition bundleComposition = pageBundleComposition.getBundleComposition();
+		BundleInfo bundleInfo = pageBundleInfo.getBundleInfo();
+		BundleSpecification bundleSpecification = new BundleSpecification(bundleComposition, bundleInfo);
 		/*
 		 * Validate the workspace.
 		 */
@@ -86,7 +94,7 @@ public class WizardProcessor extends Wizard implements INewWizard {
 			String pathTargetDirectory = root.getLocation().toFile().toString();
 			//
 			TemplateTransformer templateTransformer = new TemplateTransformer();
-			templateTransformer.copy(pathTemplateZIP, pathTargetDirectory, bundleComposition);
+			templateTransformer.copy(pathTemplateZIP, pathTargetDirectory, bundleSpecification);
 			//
 			monitor.setTaskName("Opening file for editing...");
 			monitor.worked(1);

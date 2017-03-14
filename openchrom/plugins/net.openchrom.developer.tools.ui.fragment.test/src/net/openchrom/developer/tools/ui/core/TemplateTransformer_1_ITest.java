@@ -35,15 +35,40 @@ public class TemplateTransformer_1_ITest extends TestCase {
 
 	public void test1() {
 
+		/*
+		 * 
+		 */
 		String domainName = "net.openchrom.chromatogram";
 		String detectorType = "msd";
 		String pluginType = "processor.supplier";
 		String pluginName = "massshiftdetector";
+		BundleComposition bundleComposition = new BundleComposition(domainName, detectorType, pluginType, pluginName);
+		/*
+		 * 
+		 */
+		StringBuilder license = new StringBuilder();
+		license.append("/*******************************************************************************\n");
+		license.append(" * Copyright (c) 2017 Lablicate GmbH.\n");
+		license.append(" *\n");
+		license.append(" * All rights reserved. This program and the accompanying materials\n");
+		license.append(" * are made available under the terms of the Eclipse Public License v1.0\n");
+		license.append(" * which accompanies this distribution, and is available at\n");
+		license.append(" * http://www.eclipse.org/legal/epl-v10.html\n");
+		license.append(" * Contributors:\n");
+		license.append(" * Dr. Philip Wenig - initial API and implementation\n");
+		license.append(" *******************************************************************************/");
+		//
+		BundleInfo bundleInfo = new BundleInfo();
+		bundleInfo.setVersion("1.2.0");
+		bundleInfo.setVendor("OpenChrom");
+		bundleInfo.setContributor("Dr. Philip Wenig");
+		bundleInfo.setDescription("This processor modifies the chromatogram.");
+		bundleInfo.setLicense(license.toString());
 		//
 		String pathTemplateZIP = TestPathHelper.getAbsolutePath(TestPathHelper.TEMPLATE_PROCESSOR);
 		String pathTargetDirectory = TestPathHelper.getAbsolutePath(TestPathHelper.EXPORT_DIRECTORY_PROCESSOR);
 		//
-		BundleComposition bundleComposition = new BundleComposition(domainName, detectorType, pluginType, pluginName);
-		templateTransformer.copy(pathTemplateZIP, pathTargetDirectory, bundleComposition);
+		BundleSpecification bundleSpecification = new BundleSpecification(bundleComposition, bundleInfo);
+		templateTransformer.copy(pathTemplateZIP, pathTargetDirectory, bundleSpecification);
 	}
 }

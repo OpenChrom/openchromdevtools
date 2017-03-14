@@ -51,53 +51,72 @@ public class WizardProcessor extends Wizard implements INewWizard {
 
 	public boolean performFinish() {
 
-		IRunnableWithProgress runnable = new IRunnableWithProgress() {
+		if(pageBundleComposition.isPageComplete() && pageBundleInfo.isPageComplete()) {
+			/*
+			 * Copy the template and import the plugins.
+			 */
+			IRunnableWithProgress runnable = new IRunnableWithProgress() {
 
-			public void run(IProgressMonitor monitor) throws InvocationTargetException {
+				public void run(IProgressMonitor monitor) throws InvocationTargetException {
 
-				try {
-					doFinish(monitor);
-				} catch(CoreException e) {
-					throw new InvocationTargetException(e);
-				} finally {
-					monitor.done();
+					try {
+						doFinish(monitor);
+					} catch(CoreException e) {
+						throw new InvocationTargetException(e);
+					} finally {
+						monitor.done();
+					}
 				}
+			};
+			//
+			try {
+				getContainer().run(true, false, runnable);
+			} catch(InterruptedException e) {
+				return false;
+			} catch(InvocationTargetException e) {
+				Throwable realException = e.getTargetException();
+				MessageDialog.openError(getShell(), "Error", realException.getMessage());
+				return false;
 			}
-		};
-		//
-		try {
-			getContainer().run(true, false, runnable);
-		} catch(InterruptedException e) {
-			return false;
-		} catch(InvocationTargetException e) {
-			Throwable realException = e.getTargetException();
-			MessageDialog.openError(getShell(), "Error", realException.getMessage());
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	private void doFinish(IProgressMonitor monitor) throws CoreException {
 
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		BundleComposition bundleComposition = pageBundleComposition.getBundleComposition();
-		BundleInfo bundleInfo = pageBundleInfo.getBundleInfo();
-		BundleSpecification bundleSpecification = new BundleSpecification(bundleComposition, bundleInfo);
+		final BundleComposition bundleComposition = pageBundleComposition.getBundleComposition();
+		final BundleInfo bundleInfo = pageBundleInfo.getBundleInfo();
+		final BundleSpecification bundleSpecification = new BundleSpecification(bundleComposition, bundleInfo);
 		/*
 		 * Validate the workspace.
 		 */
 		try {
-			monitor.beginTask("Creating the processor", 2);
+			monitor.beginTask("Start: Create the processor", 4);
 			monitor.worked(1);
-			//
+			/*
+			 * Copy the template.
+			 */
+			monitor.setTaskName("Copy the template ...");
+			monitor.worked(1);
 			String pathTemplateZIP = PathResolver.getAbsolutePath(PathResolver.TEMPLATE_PROCESSOR);
 			String pathTargetDirectory = root.getLocation().toFile().toString();
-			//
 			TemplateTransformer templateTransformer = new TemplateTransformer();
 			templateTransformer.copy(pathTemplateZIP, pathTargetDirectory, bundleSpecification);
-			//
-			monitor.setTaskName("Opening file for editing...");
+			/*
+			 * Import external projects.
+			 */
+			monitor.setTaskName("Run the project import ...");
 			monitor.worked(1);
+			//
+			// ExternalProjectImportWizard externalProjectImportWizard = new ExternalProjectImportWizard();
+			// WizardDialog wizardDialog = new WizardDialog(this.getShell(), externalProjectImportWizard);
+			// wizardDialog.create();
+			//
+			monitor.setTaskName("Finish: Processor created successfully.");
+			monitor.worked(1);
+			//
 		} catch(Exception e) {
 			System.out.println(e);
 		}

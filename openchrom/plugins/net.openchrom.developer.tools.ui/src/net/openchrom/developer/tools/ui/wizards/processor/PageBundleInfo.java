@@ -33,11 +33,14 @@ public class PageBundleInfo extends WizardPage {
 	private Text fileExtensionText;
 	private Text licenseText;
 	private Text labelText;
+	//
+	private BundleInfo bundleInfo;
 
 	public PageBundleInfo() {
 		super("wizardPage");
 		setTitle("OpenChrom Processor (Info)");
 		setDescription("This wizard helps you to create a new processor for OpenChrom.");
+		bundleInfo = new BundleInfo();
 	}
 
 	/**
@@ -66,13 +69,6 @@ public class PageBundleInfo extends WizardPage {
 
 	public BundleInfo getBundleInfo() {
 
-		BundleInfo bundleInfo = new BundleInfo();
-		bundleInfo.setDescription(descriptionText.getText().trim());
-		bundleInfo.setLicense(licenseText.getText().trim());
-		bundleInfo.setVendor(vendorText.getText().trim());
-		bundleInfo.setVersion(versionText.getText().trim());
-		bundleInfo.setFileExtension(fileExtensionText.getText().trim());
-		bundleInfo.setWebsite(websiteText.getText().trim());
 		return bundleInfo;
 	}
 
@@ -189,8 +185,6 @@ public class PageBundleInfo extends WizardPage {
 
 	private void initialize() {
 
-		String userName = System.getProperty("user.name");
-		//
 		StringBuilder license = new StringBuilder();
 		license.append("/*******************************************************************************\n");
 		license.append(" * Copyright (c) 2017 Lablicate GmbH.\n");
@@ -200,7 +194,7 @@ public class PageBundleInfo extends WizardPage {
 		license.append(" * which accompanies this distribution, and is available at\n");
 		license.append(" * http://www.eclipse.org/legal/epl-v10.html\n");
 		license.append(" * Contributors:\n");
-		license.append(" * " + userName + " - initial API and implementation\n");
+		license.append(" * " + System.getProperty("user.name") + " - initial API and implementation\n");
 		license.append(" *******************************************************************************/");
 		//
 		versionText.setText("1.2.0");
@@ -251,7 +245,18 @@ public class PageBundleInfo extends WizardPage {
 			updateStatus("The file extension must match the patter, e.g: '.mpe'.");
 			return;
 		}
-		//
+		/*
+		 * Set the bundle info members.
+		 */
+		bundleInfo.setDescription(descriptionText.getText().trim());
+		bundleInfo.setLicense(licenseText.getText().trim());
+		bundleInfo.setVendor(vendorText.getText().trim());
+		bundleInfo.setVersion(versionText.getText().trim());
+		bundleInfo.setFileExtension(fileExtensionText.getText().trim());
+		bundleInfo.setWebsite(websiteText.getText().trim());
+		/*
+		 * All tests passed.
+		 */
 		updateStatus(null);
 	}
 

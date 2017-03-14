@@ -46,6 +46,8 @@ public class PageBundleComposition extends WizardPage {
 	private Text bundleFeatureText;
 	private Text bundleCBIText;
 	private Text bundleUpdateSiteText;
+	//
+	private BundleComposition bundleComposition = new BundleComposition("set", "set", "set", "set");
 
 	public PageBundleComposition() {
 		super("wizardPage");
@@ -74,17 +76,15 @@ public class PageBundleComposition extends WizardPage {
 		setControl(composite);
 	}
 
+	@Override
+	public boolean canFlipToNextPage() {
+
+		return isPageComplete();
+	}
+
 	public BundleComposition getBundleComposition() {
 
-		/*
-		 * [net.openchrom.chromatogram].xxd.[processor.supplier].myprocessor
-		 */
-		String domainName = domainNameText.getText().trim();
-		String detectorType = detectorTypeCombo.getText().trim();
-		String pluginType = "processor.supplier";
-		String processorName = processorNameText.getText().trim();
-		//
-		return new BundleComposition(domainName, detectorType, pluginType, processorName);
+		return bundleComposition;
 	}
 
 	private void createDomainNameSection(Composite composite) {
@@ -186,16 +186,6 @@ public class PageBundleComposition extends WizardPage {
 	 */
 	private void dialogChanged() {
 
-		BundleComposition bundleComposition = getBundleComposition();
-		/*
-		 * Set the text fields.
-		 */
-		bundleModelText.setText(bundleComposition.getBundleModel());
-		bundleUIText.setText(bundleComposition.getBundleUI());
-		bundleTestFragmentText.setText(bundleComposition.getBundleTestFragment());
-		bundleFeatureText.setText(bundleComposition.getBundleFeature());
-		bundleCBIText.setText(bundleComposition.getBundleCBI());
-		bundleUpdateSiteText.setText(bundleComposition.getBundleUpdateSite());
 		/*
 		 * Is a workspace available?
 		 */
@@ -204,9 +194,39 @@ public class PageBundleComposition extends WizardPage {
 			updateStatus("A workspace must have been selected.");
 			return;
 		}
+		//
+		if(domainNameText.getText().trim().equals("")) {
+			updateStatus("Please set domain name, e.g: 'net.openchrom.chromatogram'.");
+			return;
+		}
+		//
+		if(detectorTypeCombo.getText().trim().equals("")) {
+			updateStatus("Please select a detector type.");
+			return;
+		}
+		//
+		if(processorNameText.getText().trim().equals("")) {
+			updateStatus("Please set a processor name, e.g: 'myprocessor'.");
+			return;
+		}
 		/*
 		 * Validate that no plug-in with the same name already exists.
+		 * Set the text fields.
+		 * [net.openchrom.chromatogram].xxd.[processor.supplier].myprocessor
 		 */
+		String domainName = domainNameText.getText().trim().toLowerCase();
+		String detectorType = detectorTypeCombo.getText().trim().toLowerCase();
+		String pluginType = "processor.supplier";
+		String processorName = processorNameText.getText().trim().toLowerCase();
+		bundleComposition = new BundleComposition(domainName, detectorType, pluginType, processorName);
+		//
+		bundleModelText.setText(bundleComposition.getBundleModel());
+		bundleUIText.setText(bundleComposition.getBundleUI());
+		bundleTestFragmentText.setText(bundleComposition.getBundleTestFragment());
+		bundleFeatureText.setText(bundleComposition.getBundleFeature());
+		bundleCBIText.setText(bundleComposition.getBundleCBI());
+		bundleUpdateSiteText.setText(bundleComposition.getBundleUpdateSite());
+		//
 		List<String> bundles = new ArrayList<String>();
 		bundles.add(bundleComposition.getBundleModel());
 		bundles.add(bundleComposition.getBundleUI());
@@ -216,25 +236,27 @@ public class PageBundleComposition extends WizardPage {
 		bundles.add(bundleComposition.getBundleUpdateSite());
 		//
 		for(String bundle : bundles) {
-			if(!validateBundle(root, bundle)) {
+			if(!isValidBundle(root, bundle)) {
 				return;
 			}
 		}
-		//
+		/*
+		 * All tests passed.
+		 */
 		updateStatus(null);
 	}
 
-	private boolean validateBundle(IWorkspaceRoot root, String bundle) {
+	private boolean isValidBundle(IWorkspaceRoot root, String bundle) {
 
 		IResource resource = root.findMember(new Path(bundle));
 		if(resource != null && resource.exists()) {
 			updateStatus("The workspace bundle \"" + bundle + "\" already exists.");
-			return true;
+			return false;
 		} else if(bundle.contains("\\") || bundle.contains("/")) {
 			updateStatus("The bundle \"" + bundle + "\" name must not contain '\\' or '/'.");
-			return true;
-		} else {
 			return false;
+		} else {
+			return true;
 		}
 	}
 

@@ -230,6 +230,9 @@ public class ProcessorWizardPage extends WizardPage {
 		if(resource != null && resource.exists()) {
 			updateStatus("The workspace bundle \"" + bundle + "\" already exists.");
 			return true;
+		} else if(bundle.contains("\\") || bundle.contains("/")) {
+			updateStatus("The bundle \"" + bundle + "\" name must not contain '\\' or '/'.");
+			return true;
 		} else {
 			return false;
 		}

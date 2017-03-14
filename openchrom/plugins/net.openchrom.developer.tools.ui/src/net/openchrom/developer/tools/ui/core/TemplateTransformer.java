@@ -37,7 +37,6 @@ public class TemplateTransformer {
 	public static final String PLACEHOLDER_LICENSE = "__license__";
 	public static final String PLACEHOLDER_VERSION = "__version__";
 	public static final String PLACEHOLDER_VENDOR = "__vendor__";
-	public static final String PLACEHOLDER_CONTRIBUTOR = "__contributor__";
 	public static final String PLACEHOLDER_DESCRIPTION = "__description__";
 	public static final String PLACEHOLDER_WEBSITE = "__website__";
 	public static final String PLACEHOLDER_FILE_EXTENSION = "__fileextension__";
@@ -76,11 +75,6 @@ public class TemplateTransformer {
 		} finally {
 			zipFile.close();
 		}
-	}
-
-	private String getModifiedFileName(BundleSpecification bundleSpecification, String fileName) {
-
-		return getModifiedLine(bundleSpecification.getBundleComposition(), fileName);
 	}
 
 	private void createExportDirectory(BundleSpecification bundleComposition, String templateName, File exportDirectory) {
@@ -152,7 +146,7 @@ public class TemplateTransformer {
 			try {
 				String line;
 				while((line = bufferedReader.readLine()) != null) {
-					printWriter.println(getModifiedLine(bundleSpecification.getBundleComposition(), line));
+					printWriter.println(getModifiedContent(bundleSpecification, line));
 				}
 			} catch(Exception e) {
 				System.out.println(e);
@@ -164,11 +158,32 @@ public class TemplateTransformer {
 		}
 	}
 
-	private String getModifiedLine(BundleComposition bundleComposition, String line) {
+	private String getModifiedFileName(BundleSpecification bundleSpecification, String fileName) {
 
-		line = line.replace(PLACEHOLDER_DOMAIN_NAME, bundleComposition.getDomainName());
-		line = line.replace(PLACEHOLDER_DETECTOR_TYPE, bundleComposition.getDetectorType());
-		line = line.replace(PLACEHOLDER_PLUGIN_TYPE, bundleComposition.getPluginType());
-		return line.replace(PLACEHOLDER_PLUGIN_NAME, bundleComposition.getPluginName());
+		return getModification(bundleSpecification.getBundleComposition(), fileName);
+	}
+
+	private String getModifiedContent(BundleSpecification bundleSpecification, String line) {
+
+		line = getModification(bundleSpecification.getBundleComposition(), line);
+		return getModification(bundleSpecification.getBundleInfo(), line);
+	}
+
+	private String getModification(BundleComposition bundleComposition, String line) {
+
+		line = line.replaceAll(PLACEHOLDER_DOMAIN_NAME, bundleComposition.getDomainName());
+		line = line.replaceAll(PLACEHOLDER_DETECTOR_TYPE, bundleComposition.getDetectorType());
+		line = line.replaceAll(PLACEHOLDER_PLUGIN_TYPE, bundleComposition.getPluginType());
+		return line.replaceAll(PLACEHOLDER_PLUGIN_NAME, bundleComposition.getPluginName());
+	}
+
+	private String getModification(BundleInfo bundleInfo, String line) {
+
+		line = line.replaceAll(PLACEHOLDER_LICENSE, bundleInfo.getLicense());
+		line = line.replaceAll(PLACEHOLDER_VERSION, bundleInfo.getVersion());
+		line = line.replaceAll(PLACEHOLDER_VENDOR, bundleInfo.getVendor());
+		line = line.replaceAll(PLACEHOLDER_DESCRIPTION, bundleInfo.getDescription());
+		line = line.replaceAll(PLACEHOLDER_WEBSITE, bundleInfo.getWebsite());
+		return line.replaceAll(PLACEHOLDER_FILE_EXTENSION, bundleInfo.getFileExtension());
 	}
 }

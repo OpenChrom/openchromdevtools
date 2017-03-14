@@ -40,10 +40,10 @@ public class TemplateTransformer_1_ITest extends TestCase {
 		String pluginType = "processor.supplier";
 		String pluginName = "massshiftdetector";
 		//
-		String templateDirectory = TestPathHelper.getAbsolutePath(TestPathHelper.TEMPLATE_DIRECTORY_PROCESSOR);
-		String targetDirectory = TestPathHelper.getAbsolutePath(TestPathHelper.EXPORT_DIRECTORY_PROCESSOR);
+		String pathTemplateZIP = TestPathHelper.getAbsolutePath(TestPathHelper.TEMPLATE_PROCESSOR);
+		String pathTargetDirectory = TestPathHelper.getAbsolutePath(TestPathHelper.EXPORT_DIRECTORY_PROCESSOR);
 		//
 		BundleComposition bundleComposition = new BundleComposition(domainName, detectorType, pluginType, pluginName);
-		templateTransformer.copy(templateDirectory, targetDirectory, bundleComposition);
+		templateTransformer.copy(pathTemplateZIP, pathTargetDirectory, bundleComposition);
 	}
 }

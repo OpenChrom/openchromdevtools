@@ -34,7 +34,7 @@ import org.eclipse.swt.widgets.Text;
 
 import net.openchrom.developer.tools.ui.core.BundleComposition;
 
-public class ProcessorWizardPage extends WizardPage {
+public class PageBundleComposition extends WizardPage {
 
 	private Text domainNameText; // net.openchrom.chromatogram.msd.processor.supplier....
 	private Combo detectorTypeCombo; // msd
@@ -47,9 +47,9 @@ public class ProcessorWizardPage extends WizardPage {
 	private Text bundleCBIText;
 	private Text bundleUpdateSiteText;
 
-	public ProcessorWizardPage() {
+	public PageBundleComposition() {
 		super("wizardPage");
-		setTitle("OpenChrom Processor");
+		setTitle("OpenChrom Processor (Bundle Name)");
 		setDescription("This wizard helps you to create a new processor for OpenChrom.");
 	}
 

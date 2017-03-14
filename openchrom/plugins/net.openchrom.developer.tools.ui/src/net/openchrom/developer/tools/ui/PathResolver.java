@@ -22,6 +22,8 @@ import org.osgi.framework.Bundle;
 
 public class PathResolver {
 
+	public static final String TEMPLATE_PROCESSOR = "templates/processor.zip";
+
 	/**
 	 * Returns a absolute path of the specified Folder. For example
 	 * TESTDATA_IMPORT_EMPTY as an absolute Path:

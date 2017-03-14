@@ -1,6 +1,0 @@
-Version
-Name (Model / UI)
-Vendor
-Company
-Contributor
-Description

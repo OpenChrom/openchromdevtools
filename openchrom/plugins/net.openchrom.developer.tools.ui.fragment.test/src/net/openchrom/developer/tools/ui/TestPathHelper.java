@@ -17,6 +17,5 @@ package net.openchrom.developer.tools.ui;
  */
 public class TestPathHelper extends PathResolver {
 
-	public static final String TEMPLATE_PROCESSOR = "templates/processor.zip";
 	public static final String EXPORT_DIRECTORY_PROCESSOR = "templates/export/processor";
 }

@@ -12,7 +12,7 @@
             name="New Processor"
             icon="icons/processor.png"
             category="net.openchrom.developer.tools.ui"
-            class="net.openchrom.developer.tools.ui.wizards.processor.ProcessorWizard"
+            class="net.openchrom.developer.tools.ui.wizards.processor.WizardProcessor"
             id="net.openchrom.developer.tools.ui.wizards.ProcessorWizard">
       </wizard>
    </extension>

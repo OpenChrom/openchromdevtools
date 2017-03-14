@@ -28,18 +28,18 @@ import net.openchrom.developer.tools.ui.PathResolver;
 import net.openchrom.developer.tools.ui.core.BundleComposition;
 import net.openchrom.developer.tools.ui.core.TemplateTransformer;
 
-public class ProcessorWizard extends Wizard implements INewWizard {
+public class WizardProcessor extends Wizard implements INewWizard {
 
-	private ProcessorWizardPage processorWizardPage;
+	private PageBundleComposition processorWizardPage;
 
-	public ProcessorWizard() {
+	public WizardProcessor() {
 		super();
 		setNeedsProgressMonitor(true);
 	}
 
 	public void addPages() {
 
-		processorWizardPage = new ProcessorWizardPage();
+		processorWizardPage = new PageBundleComposition();
 		addPage(processorWizardPage);
 	}
 
@@ -82,10 +82,11 @@ public class ProcessorWizard extends Wizard implements INewWizard {
 			monitor.beginTask("Creating the processor", 2);
 			monitor.worked(1);
 			//
+			String pathTemplateZIP = PathResolver.getAbsolutePath(PathResolver.TEMPLATE_PROCESSOR);
+			String pathTargetDirectory = root.getLocation().toFile().toString();
+			//
 			TemplateTransformer templateTransformer = new TemplateTransformer();
-			String templateDirectory = PathResolver.getAbsolutePath("templates/processor");
-			String targetDirectory = root.getLocation().toFile().toString();
-			templateTransformer.copy(templateDirectory, targetDirectory, bundleComposition);
+			templateTransformer.copy(pathTemplateZIP, pathTargetDirectory, bundleComposition);
 			//
 			monitor.setTaskName("Opening file for editing...");
 			monitor.worked(1);

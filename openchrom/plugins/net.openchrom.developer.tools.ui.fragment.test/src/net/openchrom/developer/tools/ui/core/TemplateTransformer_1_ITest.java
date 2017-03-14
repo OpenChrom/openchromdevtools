@@ -63,6 +63,7 @@ public class TemplateTransformer_1_ITest extends TestCase {
 		bundleInfo.setVendor("OpenChrom");
 		bundleInfo.setDescription("This processor modifies the chromatogram.");
 		bundleInfo.setWebsite("http://www.openchrom.net");
+		bundleInfo.setLabel("My Plugin");
 		bundleInfo.setFileExtension(".mpe");
 		bundleInfo.setLicense(license.toString());
 		//

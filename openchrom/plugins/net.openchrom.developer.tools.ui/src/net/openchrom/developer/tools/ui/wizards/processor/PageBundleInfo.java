@@ -32,6 +32,7 @@ public class PageBundleInfo extends WizardPage {
 	private Text websiteText;
 	private Text fileExtensionText;
 	private Text licenseText;
+	private Text labelText;
 
 	public PageBundleInfo() {
 		super("wizardPage");
@@ -54,6 +55,7 @@ public class PageBundleInfo extends WizardPage {
 		createVendorSection(composite);
 		createDescriptionSection(composite);
 		createWebsiteSection(composite);
+		createLabelSection(composite);
 		createFileExtensionSection(composite);
 		createLicenseSection(composite);
 		//
@@ -138,6 +140,22 @@ public class PageBundleInfo extends WizardPage {
 		});
 	}
 
+	private void createLabelSection(Composite composite) {
+
+		Label label = new Label(composite, SWT.NULL);
+		label.setText("Label:");
+		//
+		labelText = new Text(composite, SWT.BORDER | SWT.SINGLE);
+		labelText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		labelText.addModifyListener(new ModifyListener() {
+
+			public void modifyText(ModifyEvent e) {
+
+				dialogChanged();
+			}
+		});
+	}
+
 	private void createFileExtensionSection(Composite composite) {
 
 		Label label = new Label(composite, SWT.NULL);
@@ -189,6 +207,7 @@ public class PageBundleInfo extends WizardPage {
 		vendorText.setText("OpenChrom");
 		descriptionText.setText("This processor modifies the chromatogram.");
 		websiteText.setText("http://www.openchrom.net");
+		labelText.setText("My Plugin");
 		fileExtensionText.setText(".mpe");
 		licenseText.setText(license.toString());
 	}
@@ -198,8 +217,6 @@ public class PageBundleInfo extends WizardPage {
 	 */
 	private void dialogChanged() {
 
-		setPageComplete(false);
-		//
 		if(!versionText.getText().trim().matches("([0-9]*)(\\.)([0-9]*)(\\.)([0-9]*)")) {
 			updateStatus("The version must match the pattern, e.h.: 1.2.0.");
 			return;
@@ -220,8 +237,13 @@ public class PageBundleInfo extends WizardPage {
 			return;
 		}
 		//
-		if(websiteText.getText().trim().equals("")) {
-			updateStatus("Please set website.");
+		if(licenseText.getText().trim().equals("")) {
+			updateStatus("Please set license.");
+			return;
+		}
+		//
+		if(labelText.getText().trim().equals("")) {
+			updateStatus("Please set plugin label, e.g.: My Plugin.");
 			return;
 		}
 		//
@@ -230,7 +252,6 @@ public class PageBundleInfo extends WizardPage {
 			return;
 		}
 		//
-		setPageComplete(true);
 		updateStatus(null);
 	}
 

@@ -186,7 +186,6 @@ public class PageBundleComposition extends WizardPage {
 	 */
 	private void dialogChanged() {
 
-		setPageComplete(false);
 		BundleComposition bundleComposition = getBundleComposition();
 		/*
 		 * Set the text fields.
@@ -222,7 +221,6 @@ public class PageBundleComposition extends WizardPage {
 			}
 		}
 		//
-		setPageComplete(true);
 		updateStatus(null);
 	}
 

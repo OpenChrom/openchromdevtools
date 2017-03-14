@@ -39,6 +39,7 @@ public class TemplateTransformer {
 	public static final String PLACEHOLDER_VENDOR = "__vendor__";
 	public static final String PLACEHOLDER_DESCRIPTION = "__description__";
 	public static final String PLACEHOLDER_WEBSITE = "__website__";
+	public static final String PLACEHOLDER_LABEL = "__label__";
 	public static final String PLACEHOLDER_FILE_EXTENSION = "__fileextension__";
 	//
 	private static final String SRC_FOLDER = "/src/";
@@ -184,6 +185,7 @@ public class TemplateTransformer {
 		line = line.replaceAll(PLACEHOLDER_VENDOR, bundleInfo.getVendor());
 		line = line.replaceAll(PLACEHOLDER_DESCRIPTION, bundleInfo.getDescription());
 		line = line.replaceAll(PLACEHOLDER_WEBSITE, bundleInfo.getWebsite());
+		line = line.replaceAll(PLACEHOLDER_LABEL, bundleInfo.getLabel());
 		return line.replaceAll(PLACEHOLDER_FILE_EXTENSION, bundleInfo.getFileExtension());
 	}
 }

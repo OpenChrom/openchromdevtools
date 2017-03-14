@@ -19,6 +19,7 @@ public class BundleInfo {
 	private String description;
 	private String website;
 	private String fileExtension;
+	private String label;
 
 	public String getLicense() {
 
@@ -78,5 +79,15 @@ public class BundleInfo {
 	public void setFileExtension(String fileExtension) {
 
 		this.fileExtension = fileExtension;
+	}
+
+	public String getLabel() {
+
+		return label;
+	}
+
+	public void setLabel(String label) {
+
+		this.label = label;
 	}
 }

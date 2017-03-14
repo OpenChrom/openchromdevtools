@@ -16,8 +16,9 @@ public class BundleInfo {
 	private String license;
 	private String version;
 	private String vendor;
-	private String contributor;
 	private String description;
+	private String website;
+	private String fileExtension;
 
 	public String getLicense() {
 
@@ -49,16 +50,6 @@ public class BundleInfo {
 		this.vendor = vendor;
 	}
 
-	public String getContributor() {
-
-		return contributor;
-	}
-
-	public void setContributor(String contributor) {
-
-		this.contributor = contributor;
-	}
-
 	public String getDescription() {
 
 		return description;
@@ -67,5 +58,25 @@ public class BundleInfo {
 	public void setDescription(String description) {
 
 		this.description = description;
+	}
+
+	public String getWebsite() {
+
+		return website;
+	}
+
+	public void setWebsite(String website) {
+
+		this.website = website;
+	}
+
+	public String getFileExtension() {
+
+		return fileExtension;
+	}
+
+	public void setFileExtension(String fileExtension) {
+
+		this.fileExtension = fileExtension;
 	}
 }

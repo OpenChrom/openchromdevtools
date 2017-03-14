@@ -24,10 +24,23 @@ import java.util.zip.ZipFile;
 
 public class TemplateTransformer {
 
+	/*
+	 * Bundle Composition
+	 */
 	public static final String PLACEHOLDER_DOMAIN_NAME = "__domainname__";
 	public static final String PLACEHOLDER_DETECTOR_TYPE = "__detectortype__";
 	public static final String PLACEHOLDER_PLUGIN_TYPE = "__plugintype__";
 	public static final String PLACEHOLDER_PLUGIN_NAME = "__pluginname__";
+	/*
+	 * Bundle Info
+	 */
+	public static final String PLACEHOLDER_LICENSE = "__license__";
+	public static final String PLACEHOLDER_VERSION = "__version__";
+	public static final String PLACEHOLDER_VENDOR = "__vendor__";
+	public static final String PLACEHOLDER_CONTRIBUTOR = "__contributor__";
+	public static final String PLACEHOLDER_DESCRIPTION = "__description__";
+	public static final String PLACEHOLDER_WEBSITE = "__website__";
+	public static final String PLACEHOLDER_FILE_EXTENSION = "__fileextension__";
 	//
 	private static final String SRC_FOLDER = "/src/";
 

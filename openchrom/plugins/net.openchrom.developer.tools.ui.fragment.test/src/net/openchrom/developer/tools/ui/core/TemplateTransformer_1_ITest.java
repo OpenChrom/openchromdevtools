@@ -61,8 +61,9 @@ public class TemplateTransformer_1_ITest extends TestCase {
 		BundleInfo bundleInfo = new BundleInfo();
 		bundleInfo.setVersion("1.2.0");
 		bundleInfo.setVendor("OpenChrom");
-		bundleInfo.setContributor("Dr. Philip Wenig");
 		bundleInfo.setDescription("This processor modifies the chromatogram.");
+		bundleInfo.setWebsite("http://www.openchrom.net");
+		bundleInfo.setFileExtension(".mpe");
 		bundleInfo.setLicense(license.toString());
 		//
 		String pathTemplateZIP = TestPathHelper.getAbsolutePath(TestPathHelper.TEMPLATE_PROCESSOR);

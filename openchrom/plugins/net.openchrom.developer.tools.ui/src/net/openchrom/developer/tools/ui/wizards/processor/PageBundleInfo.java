@@ -28,8 +28,9 @@ public class PageBundleInfo extends WizardPage {
 
 	private Text versionText;
 	private Text vendorText;
-	private Text contributorText;
 	private Text descriptionText;
+	private Text websiteText;
+	private Text fileExtensionText;
 	private Text licenseText;
 
 	public PageBundleInfo() {
@@ -51,8 +52,9 @@ public class PageBundleInfo extends WizardPage {
 		//
 		createVersionSection(composite);
 		createVendorSection(composite);
-		createContributorSection(composite);
 		createDescriptionSection(composite);
+		createWebsiteSection(composite);
+		createFileExtensionSection(composite);
 		createLicenseSection(composite);
 		//
 		initialize();
@@ -63,11 +65,12 @@ public class PageBundleInfo extends WizardPage {
 	public BundleInfo getBundleInfo() {
 
 		BundleInfo bundleInfo = new BundleInfo();
-		bundleInfo.setContributor(contributorText.getText().trim());
 		bundleInfo.setDescription(descriptionText.getText().trim());
 		bundleInfo.setLicense(licenseText.getText().trim());
 		bundleInfo.setVendor(vendorText.getText().trim());
 		bundleInfo.setVersion(versionText.getText().trim());
+		bundleInfo.setFileExtension(fileExtensionText.getText().trim());
+		bundleInfo.setWebsite(websiteText.getText().trim());
 		return bundleInfo;
 	}
 
@@ -103,22 +106,6 @@ public class PageBundleInfo extends WizardPage {
 		});
 	}
 
-	private void createContributorSection(Composite composite) {
-
-		Label label = new Label(composite, SWT.NULL);
-		label.setText("Contributor:");
-		//
-		contributorText = new Text(composite, SWT.BORDER | SWT.SINGLE);
-		contributorText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		contributorText.addModifyListener(new ModifyListener() {
-
-			public void modifyText(ModifyEvent e) {
-
-				dialogChanged();
-			}
-		});
-	}
-
 	private void createDescriptionSection(Composite composite) {
 
 		Label label = new Label(composite, SWT.NULL);
@@ -127,6 +114,38 @@ public class PageBundleInfo extends WizardPage {
 		descriptionText = new Text(composite, SWT.BORDER | SWT.SINGLE);
 		descriptionText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		descriptionText.addModifyListener(new ModifyListener() {
+
+			public void modifyText(ModifyEvent e) {
+
+				dialogChanged();
+			}
+		});
+	}
+
+	private void createWebsiteSection(Composite composite) {
+
+		Label label = new Label(composite, SWT.NULL);
+		label.setText("Website:");
+		//
+		websiteText = new Text(composite, SWT.BORDER | SWT.SINGLE);
+		websiteText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		websiteText.addModifyListener(new ModifyListener() {
+
+			public void modifyText(ModifyEvent e) {
+
+				dialogChanged();
+			}
+		});
+	}
+
+	private void createFileExtensionSection(Composite composite) {
+
+		Label label = new Label(composite, SWT.NULL);
+		label.setText("File Extension:");
+		//
+		fileExtensionText = new Text(composite, SWT.BORDER | SWT.SINGLE);
+		fileExtensionText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		fileExtensionText.addModifyListener(new ModifyListener() {
 
 			public void modifyText(ModifyEvent e) {
 
@@ -168,8 +187,9 @@ public class PageBundleInfo extends WizardPage {
 		//
 		versionText.setText("1.2.0");
 		vendorText.setText("OpenChrom");
-		contributorText.setText(userName);
 		descriptionText.setText("This processor modifies the chromatogram.");
+		websiteText.setText("http://www.openchrom.net");
+		fileExtensionText.setText(".mpe");
 		licenseText.setText(license.toString());
 	}
 
@@ -190,18 +210,23 @@ public class PageBundleInfo extends WizardPage {
 			return;
 		}
 		//
-		if(contributorText.getText().trim().equals("")) {
-			updateStatus("Please set a contributor, e.g. your name.");
-			return;
-		}
-		//
 		if(descriptionText.getText().trim().equals("")) {
 			updateStatus("Please set description.");
 			return;
 		}
 		//
-		if(licenseText.getText().trim().equals("")) {
-			updateStatus("Please set license.");
+		if(websiteText.getText().trim().equals("")) {
+			updateStatus("Please set website.");
+			return;
+		}
+		//
+		if(websiteText.getText().trim().equals("")) {
+			updateStatus("Please set website.");
+			return;
+		}
+		//
+		if(!fileExtensionText.getText().trim().matches("(\\.)([a-zA-Z])([a-zA-Z])([a-zA-Z])")) {
+			updateStatus("The file extension must match the patter, e.g: '.mpe'.");
 			return;
 		}
 		//

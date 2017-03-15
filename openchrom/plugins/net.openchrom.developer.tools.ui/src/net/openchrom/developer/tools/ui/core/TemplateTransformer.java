@@ -15,12 +15,21 @@ import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 public class TemplateTransformer {
 
@@ -43,6 +52,9 @@ public class TemplateTransformer {
 	public static final String PLACEHOLDER_FILE_EXTENSION = "__fileextension__";
 	//
 	private static final String SRC_FOLDER = "/src/";
+	//
+	private static final Pattern ECORE_UUID = Pattern.compile("(=\")(_[\\w-]{22})(\")");
+	private static final String FILE_FRAGMENT_E4XMI = "fragment.e4xmi";
 
 	public void copy(String pathTemplateZIP, String pathExportDirectory, BundleSpecification bundleSpecification) {
 
@@ -139,11 +151,14 @@ public class TemplateTransformer {
 	private void transferFileContent(BundleSpecification bundleSpecification, ZipFile zipFile, ZipEntry zipEntry, File fileTarget) throws IOException {
 
 		if(!zipEntry.isDirectory()) {
+			boolean isFragmente4XmiFile = fileTarget.getName().endsWith(FILE_FRAGMENT_E4XMI);
 			DataInputStream dataInputStream = new DataInputStream(new BufferedInputStream(zipFile.getInputStream(zipEntry)));
 			InputStreamReader inputStreamReader = new InputStreamReader(dataInputStream);
 			BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 			PrintWriter printWriter = new PrintWriter(fileTarget);
-			//
+			/*
+			 * Replace the placeholder.
+			 */
 			try {
 				String line;
 				while((line = bufferedReader.readLine()) != null) {
@@ -156,6 +171,57 @@ public class TemplateTransformer {
 				printWriter.flush();
 				printWriter.close();
 			}
+			/*
+			 * Modify fragment.e4xmi, set GUIDs
+			 */
+			if(isFragmente4XmiFile) {
+				modifyApplicationModel(fileTarget);
+			}
+		}
+	}
+
+	private void modifyApplicationModel(File fragmente4xmi) throws IOException {
+
+		Map<String, String> ecoreUUIDs = new HashMap<String, String>();
+		List<String> lines = new ArrayList<String>();
+		/*
+		 * Get the content and create new GUUIDs.
+		 */
+		BufferedReader bufferedReader = new BufferedReader(new FileReader(fragmente4xmi));
+		try {
+			String line;
+			while((line = bufferedReader.readLine()) != null) {
+				/*
+				 * Get the UUIDs and replace them.
+				 */
+				Matcher matcher = ECORE_UUID.matcher(line);
+				while(matcher.find()) {
+					String uuid = matcher.group(2);
+					if(!ecoreUUIDs.containsKey(uuid)) {
+						ecoreUUIDs.put(uuid, EcoreUtil.generateUUID());
+					}
+					line.replaceAll(uuid, ecoreUUIDs.get(uuid));
+				}
+				lines.add(line);
+			}
+		} catch(Exception e) {
+			System.out.println(e);
+		} finally {
+			bufferedReader.close();
+		}
+		/*
+		 * Write the modified data.
+		 */
+		PrintWriter printWriter = new PrintWriter(fragmente4xmi);
+		try {
+			for(String line : lines) {
+				printWriter.println(line);
+			}
+		} catch(Exception e) {
+			System.out.println(e);
+		} finally {
+			printWriter.flush();
+			printWriter.close();
 		}
 	}
 

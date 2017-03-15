@@ -55,6 +55,7 @@ public class TemplateTransformer_1_ITest extends TestCase {
 		license.append(" * which accompanies this distribution, and is available at\n");
 		license.append(" * http://www.eclipse.org/legal/epl-v10.html\n");
 		license.append(" * Contributors:\n");
+		license.append(" *\n");
 		license.append(" * Dr. Philip Wenig - initial API and implementation\n");
 		license.append(" *******************************************************************************/");
 		//

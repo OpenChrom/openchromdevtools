@@ -64,7 +64,7 @@ public class TemplateTransformer_1_ITest extends TestCase {
 		bundleInfo.setDescription("This processor helps to detect mass shifts.");
 		bundleInfo.setWebsite("http://www.openchrom.net");
 		bundleInfo.setLabel("Mass Shift Detector");
-		bundleInfo.setFileExtension(".mdp");
+		bundleInfo.setFileExtension("mdp");
 		bundleInfo.setLicense(license.toString());
 		//
 		String pathTemplateZIP = TestPathHelper.getAbsolutePath(TestPathHelper.TEMPLATE_PROCESSOR);

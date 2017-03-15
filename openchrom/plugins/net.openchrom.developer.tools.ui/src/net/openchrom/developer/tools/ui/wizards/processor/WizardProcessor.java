@@ -78,6 +78,7 @@ public class WizardProcessor extends Wizard implements INewWizard {
 				MessageDialog.openError(getShell(), "Error", realException.getMessage());
 				return false;
 			}
+			//
 			return true;
 		}
 		return false;
@@ -85,34 +86,22 @@ public class WizardProcessor extends Wizard implements INewWizard {
 
 	private void doFinish(IProgressMonitor monitor) throws CoreException {
 
-		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		final BundleComposition bundleComposition = pageBundleComposition.getBundleComposition();
-		final BundleInfo bundleInfo = pageBundleInfo.getBundleInfo();
-		final BundleSpecification bundleSpecification = new BundleSpecification(bundleComposition, bundleInfo);
-		/*
-		 * Validate the workspace.
-		 */
 		try {
-			monitor.beginTask("Start: Create the processor", 4);
+			monitor.beginTask("Start: Create the processor", 3);
+			final IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+			final BundleComposition bundleComposition = pageBundleComposition.getBundleComposition();
+			final BundleInfo bundleInfo = pageBundleInfo.getBundleInfo();
+			final BundleSpecification bundleSpecification = new BundleSpecification(bundleComposition, bundleInfo);
 			monitor.worked(1);
 			/*
 			 * Copy the template.
 			 */
 			monitor.setTaskName("Copy the template ...");
-			monitor.worked(1);
 			String pathTemplateZIP = PathResolver.getAbsolutePath(PathResolver.TEMPLATE_PROCESSOR);
 			String pathTargetDirectory = root.getLocation().toFile().toString();
 			TemplateTransformer templateTransformer = new TemplateTransformer();
 			templateTransformer.copy(pathTemplateZIP, pathTargetDirectory, bundleSpecification);
-			/*
-			 * Import external projects.
-			 */
-			monitor.setTaskName("Run the project import ...");
 			monitor.worked(1);
-			//
-			// ExternalProjectImportWizard externalProjectImportWizard = new ExternalProjectImportWizard();
-			// WizardDialog wizardDialog = new WizardDialog(this.getShell(), externalProjectImportWizard);
-			// wizardDialog.create();
 			//
 			monitor.setTaskName("Finish: Processor created successfully.");
 			monitor.worked(1);

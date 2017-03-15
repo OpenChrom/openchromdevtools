@@ -19,6 +19,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -52,6 +56,8 @@ public class TemplateTransformer {
 	public static final String PLACEHOLDER_FILE_EXTENSION = "__fileextension__";
 	//
 	private static final String SRC_FOLDER = "/src/";
+	private static final String FILE_GIF = ".gif";
+	private static final String FILE_PNG = ".png";
 	//
 	private static final Pattern ECORE_UUID = Pattern.compile("(=\")(_[\\w-]{22})(\")");
 	private static final String FILE_FRAGMENT_E4XMI = "fragment.e4xmi";
@@ -140,12 +146,25 @@ public class TemplateTransformer {
 		if(!fileTarget.exists()) {
 			try {
 				if(fileTarget.createNewFile()) {
-					transferFileContent(bundleSpecification, zipFile, zipEntry, fileTarget);
+					String fileName = fileTarget.getName().toLowerCase();
+					if(fileName.endsWith(FILE_GIF) || fileName.endsWith(FILE_PNG)) {
+						copyImage(zipFile, zipEntry, fileTarget);
+					} else {
+						transferFileContent(bundleSpecification, zipFile, zipEntry, fileTarget);
+					}
 				}
 			} catch(IOException e) {
 				System.out.println(e);
 			}
 		}
+	}
+
+	private void copyImage(ZipFile zipFile, ZipEntry zipEntry, File fileTarget) throws IOException {
+
+		DataInputStream dataInputStream = new DataInputStream(new BufferedInputStream(zipFile.getInputStream(zipEntry)));
+		Path path = Paths.get(fileTarget.getAbsolutePath());
+		Files.copy(dataInputStream, path, StandardCopyOption.REPLACE_EXISTING);
+		dataInputStream.close();
 	}
 
 	private void transferFileContent(BundleSpecification bundleSpecification, ZipFile zipFile, ZipEntry zipEntry, File fileTarget) throws IOException {

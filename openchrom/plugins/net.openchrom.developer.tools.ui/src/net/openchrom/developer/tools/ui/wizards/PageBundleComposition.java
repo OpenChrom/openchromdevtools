@@ -9,7 +9,7 @@
  * Contributors:
  * Dr. Philip Wenig - initial API and implementation
  *******************************************************************************/
-package net.openchrom.developer.tools.ui.wizards.processor;
+package net.openchrom.developer.tools.ui.wizards;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +38,7 @@ public class PageBundleComposition extends WizardPage {
 
 	private Text domainNameText; // net.openchrom.chromatogram.msd.processor.supplier....
 	private Combo detectorTypeCombo; // msd
-	private Text processorNameText; // myprocessor
+	private Text pluginNameText; // myprocessor, myconverter
 	//
 	private Text bundleModelText;
 	private Text bundleUIText;
@@ -48,11 +48,20 @@ public class PageBundleComposition extends WizardPage {
 	private Text bundleUpdateSiteText;
 	//
 	private BundleComposition bundleComposition = new BundleComposition("set", "set", "set", "set");
+	//
+	private String typeLabel = ""; // Processor | Converter
+	private String[] detectorTypeItems; // new String[]{"msd", "csd", "wsd", "xxd"}
+	private String pluginType; // "processor.supplier" | "converter.supplier"
 
-	public PageBundleComposition() {
+	public PageBundleComposition(String typeLabel, String[] detectorTypeItems, String pluginType) {
 		super("wizardPage");
-		setTitle("OpenChrom Processor (Bundle Name)");
-		setDescription("This wizard helps you to create a new processor for OpenChrom.");
+		//
+		this.typeLabel = typeLabel;
+		this.detectorTypeItems = detectorTypeItems;
+		this.pluginType = pluginType;
+		//
+		setTitle("OpenChrom " + typeLabel + " (Bundle Name)");
+		setDescription("This wizard helps you to create a new " + typeLabel.toLowerCase() + " for OpenChrom.");
 	}
 
 	/**
@@ -68,7 +77,7 @@ public class PageBundleComposition extends WizardPage {
 		//
 		createDomainNameSection(composite);
 		createDetectorTypeSection(composite);
-		createProcessorNameSection(composite);
+		createPluginNameSection(composite);
 		createBundleCompositionSection(composite);
 		//
 		initialize();
@@ -120,14 +129,14 @@ public class PageBundleComposition extends WizardPage {
 		});
 	}
 
-	private void createProcessorNameSection(Composite composite) {
+	private void createPluginNameSection(Composite composite) {
 
 		Label label = new Label(composite, SWT.NULL);
-		label.setText("Processor Name:");
+		label.setText(typeLabel + " Name:");
 		//
-		processorNameText = new Text(composite, SWT.BORDER | SWT.SINGLE);
-		processorNameText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		processorNameText.addModifyListener(new ModifyListener() {
+		pluginNameText = new Text(composite, SWT.BORDER | SWT.SINGLE);
+		pluginNameText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		pluginNameText.addModifyListener(new ModifyListener() {
 
 			public void modifyText(ModifyEvent e) {
 
@@ -176,9 +185,9 @@ public class PageBundleComposition extends WizardPage {
 	private void initialize() {
 
 		domainNameText.setText("net.openchrom.chromatogram");
-		detectorTypeCombo.setItems(new String[]{"msd", "csd", "wsd", "xxd"});
+		detectorTypeCombo.setItems(detectorTypeItems);
 		detectorTypeCombo.select(0);
-		processorNameText.setText("myprocessor");
+		pluginNameText.setText("my" + typeLabel.toLowerCase());
 	}
 
 	/**
@@ -205,8 +214,8 @@ public class PageBundleComposition extends WizardPage {
 			return;
 		}
 		//
-		if(processorNameText.getText().trim().equals("")) {
-			updateStatus("Please set a processor name, e.g: 'myprocessor'.");
+		if(pluginNameText.getText().trim().equals("")) {
+			updateStatus("Please set a " + typeLabel.toLowerCase() + " name, e.g: 'my" + typeLabel.toLowerCase() + "'.");
 			return;
 		}
 		/*
@@ -216,9 +225,8 @@ public class PageBundleComposition extends WizardPage {
 		 */
 		String domainName = domainNameText.getText().trim().toLowerCase();
 		String detectorType = detectorTypeCombo.getText().trim().toLowerCase();
-		String pluginType = "processor.supplier";
-		String processorName = processorNameText.getText().trim().toLowerCase();
-		bundleComposition = new BundleComposition(domainName, detectorType, pluginType, processorName);
+		String pluginName = pluginNameText.getText().trim().toLowerCase();
+		bundleComposition = new BundleComposition(domainName, detectorType, pluginType, pluginName);
 		//
 		bundleModelText.setText(bundleComposition.getBundleModel());
 		bundleUIText.setText(bundleComposition.getBundleUI());

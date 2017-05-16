@@ -44,6 +44,8 @@ public class TemplateTransformer {
 	public static final String PLACEHOLDER_DETECTOR_TYPE = "__detectortype__";
 	public static final String PLACEHOLDER_PLUGIN_TYPE = "__plugintype__";
 	public static final String PLACEHOLDER_PLUGIN_NAME = "__pluginname__";
+	//
+	public static final String PLACEHOLDER_DETECTOR_CLASS = "__detectorclass__"; // MSD, CSD, WSD
 	/*
 	 * Bundle Info
 	 */
@@ -259,6 +261,7 @@ public class TemplateTransformer {
 
 		line = line.replaceAll(PLACEHOLDER_DOMAIN_NAME, bundleComposition.getDomainName());
 		line = line.replaceAll(PLACEHOLDER_DETECTOR_TYPE, bundleComposition.getDetectorType());
+		line = line.replaceAll(PLACEHOLDER_DETECTOR_CLASS, bundleComposition.getDetectorType().toUpperCase());
 		line = line.replaceAll(PLACEHOLDER_PLUGIN_TYPE, bundleComposition.getPluginType());
 		return line.replaceAll(PLACEHOLDER_PLUGIN_NAME, bundleComposition.getPluginName());
 	}

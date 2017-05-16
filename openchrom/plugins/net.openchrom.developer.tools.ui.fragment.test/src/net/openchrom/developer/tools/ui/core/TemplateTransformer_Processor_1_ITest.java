@@ -15,7 +15,7 @@ import net.openchrom.developer.tools.ui.TestPathHelper;
 
 import junit.framework.TestCase;
 
-public class TemplateTransformer_1_ITest extends TestCase {
+public class TemplateTransformer_Processor_1_ITest extends TestCase {
 
 	private TemplateTransformer templateTransformer;
 
@@ -38,10 +38,10 @@ public class TemplateTransformer_1_ITest extends TestCase {
 		/*
 		 * 
 		 */
-		String domainName = "net.openchrom.chromatogram";
-		String detectorType = "msd";
+		String domainName = "net.openchrom";
+		String detectorType = "xxd";
 		String pluginType = "processor.supplier";
-		String pluginName = "massshiftdetector";
+		String pluginName = "tracecompare";
 		BundleComposition bundleComposition = new BundleComposition(domainName, detectorType, pluginType, pluginName);
 		/*
 		 * 
@@ -62,14 +62,14 @@ public class TemplateTransformer_1_ITest extends TestCase {
 		BundleInfo bundleInfo = new BundleInfo();
 		bundleInfo.setVersion("1.2.0");
 		bundleInfo.setVendor("OpenChrom");
-		bundleInfo.setDescription("This processor helps to detect mass shifts.");
+		bundleInfo.setDescription("This processor helps to compare chromatographic traces.");
 		bundleInfo.setWebsite("http://www.openchrom.net");
-		bundleInfo.setLabel("Mass Shift Detector");
-		bundleInfo.setFileExtension("mdp");
+		bundleInfo.setLabel("Trace Compare");
+		bundleInfo.setFileExtension("otc");
 		bundleInfo.setLicense(license.toString());
 		//
 		String pathTemplateZIP = TestPathHelper.getAbsolutePath(TestPathHelper.TEMPLATE_PROCESSOR);
-		String pathTargetDirectory = TestPathHelper.getAbsolutePath(TestPathHelper.EXPORT_DIRECTORY_PROCESSOR);
+		String pathTargetDirectory = TestPathHelper.getAbsolutePath(TestPathHelper.EXPORT_DIRECTORY);
 		//
 		BundleSpecification bundleSpecification = new BundleSpecification(bundleComposition, bundleInfo);
 		templateTransformer.copy(pathTemplateZIP, pathTargetDirectory, bundleSpecification);

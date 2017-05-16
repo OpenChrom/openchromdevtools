@@ -23,6 +23,7 @@ import org.osgi.framework.Bundle;
 public class PathResolver {
 
 	public static final String TEMPLATE_PROCESSOR = "templates/processor.zip";
+	public static final String TEMPLATE_CONVERTER = "templates/converter.zip";
 
 	/**
 	 * Returns a absolute path of the specified Folder. For example

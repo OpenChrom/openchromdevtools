@@ -9,7 +9,7 @@
  * Contributors:
  * Dr. Philip Wenig - initial API and implementation
  *******************************************************************************/
-package net.openchrom.developer.tools.ui.wizards.processor;
+package net.openchrom.developer.tools.ui.wizards;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -32,6 +32,7 @@ import net.openchrom.developer.tools.ui.core.TemplateTransformer;
 
 public class WizardProcessor extends Wizard implements INewWizard {
 
+	private static final String TYPE_LABEL = "Processor";
 	private PageBundleComposition pageBundleComposition;
 	private PageBundleInfo pageBundleInfo;
 
@@ -42,8 +43,11 @@ public class WizardProcessor extends Wizard implements INewWizard {
 
 	public void addPages() {
 
-		pageBundleComposition = new PageBundleComposition();
-		pageBundleInfo = new PageBundleInfo();
+		String[] detectorTypeItems = new String[]{"msd", "csd", "wsd", "xxd"};
+		String pluginType = "processor.supplier";
+		//
+		pageBundleComposition = new PageBundleComposition(TYPE_LABEL, detectorTypeItems, pluginType);
+		pageBundleInfo = new PageBundleInfo(TYPE_LABEL);
 		//
 		addPage(pageBundleComposition);
 		addPage(pageBundleInfo);

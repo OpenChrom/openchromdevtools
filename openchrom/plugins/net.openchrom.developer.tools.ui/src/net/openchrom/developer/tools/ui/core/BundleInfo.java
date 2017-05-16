@@ -76,6 +76,16 @@ public class BundleInfo {
 		return fileExtension;
 	}
 
+	/**
+	 * E.g.:
+	 * 
+	 * png
+	 * jpg
+	 * 
+	 * Don't use a leading dot ".".
+	 * 
+	 * @param fileExtension
+	 */
 	public void setFileExtension(String fileExtension) {
 
 		this.fileExtension = fileExtension;

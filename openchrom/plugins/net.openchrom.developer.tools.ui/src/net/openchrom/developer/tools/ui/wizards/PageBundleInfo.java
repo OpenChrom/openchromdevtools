@@ -9,7 +9,7 @@
  * Contributors:
  * Dr. Philip Wenig - initial API and implementation
  *******************************************************************************/
-package net.openchrom.developer.tools.ui.wizards.processor;
+package net.openchrom.developer.tools.ui.wizards;
 
 import org.eclipse.jface.dialogs.IDialogPage;
 import org.eclipse.jface.wizard.WizardPage;
@@ -35,11 +35,19 @@ public class PageBundleInfo extends WizardPage {
 	private Text labelText;
 	//
 	private BundleInfo bundleInfo;
+	//
+	private String typeLabel = "";
 
-	public PageBundleInfo() {
+	/**
+	 * labelType == Processor | Converter
+	 */
+	public PageBundleInfo(String typeLabel) {
 		super("wizardPage");
-		setTitle("OpenChrom Processor (Info)");
-		setDescription("This wizard helps you to create a new processor for OpenChrom.");
+		//
+		this.typeLabel = typeLabel;
+		//
+		setTitle("OpenChrom " + typeLabel + " (Info)");
+		setDescription("This wizard helps you to create a new " + typeLabel.toLowerCase() + " for OpenChrom.");
 		bundleInfo = new BundleInfo();
 	}
 
@@ -193,16 +201,17 @@ public class PageBundleInfo extends WizardPage {
 		license.append(" * are made available under the terms of the Eclipse Public License v1.0\n");
 		license.append(" * which accompanies this distribution, and is available at\n");
 		license.append(" * http://www.eclipse.org/legal/epl-v10.html\n");
+		license.append(" *\n");
 		license.append(" * Contributors:\n");
 		license.append(" * " + System.getProperty("user.name") + " - initial API and implementation\n");
 		license.append(" *******************************************************************************/");
 		//
 		versionText.setText("1.2.0");
 		vendorText.setText("OpenChrom");
-		descriptionText.setText("This processor modifies the chromatogram.");
+		descriptionText.setText("This is a " + typeLabel + ".");
 		websiteText.setText("http://www.openchrom.net");
 		labelText.setText("My Plugin");
-		fileExtensionText.setText(".mpe");
+		fileExtensionText.setText("mpe");
 		licenseText.setText(license.toString());
 	}
 
@@ -241,8 +250,8 @@ public class PageBundleInfo extends WizardPage {
 			return;
 		}
 		//
-		if(!fileExtensionText.getText().trim().matches("(\\.)([a-zA-Z])([a-zA-Z])([a-zA-Z])")) {
-			updateStatus("The file extension must match the patter, e.g: '.mpe'.");
+		if(!fileExtensionText.getText().trim().matches("([a-zA-Z])([a-zA-Z])([a-zA-Z])")) {
+			updateStatus("The file extension must match the patter, e.g: 'mpe'.");
 			return;
 		}
 		/*

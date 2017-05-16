@@ -172,7 +172,7 @@ public class TemplateTransformer {
 	private void transferFileContent(BundleSpecification bundleSpecification, ZipFile zipFile, ZipEntry zipEntry, File fileTarget) throws IOException {
 
 		if(!zipEntry.isDirectory()) {
-			boolean isFragmente4XmiFile = fileTarget.getName().endsWith(FILE_FRAGMENT_E4XMI);
+			//
 			DataInputStream dataInputStream = new DataInputStream(new BufferedInputStream(zipFile.getInputStream(zipEntry)));
 			InputStreamReader inputStreamReader = new InputStreamReader(dataInputStream);
 			BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
@@ -195,6 +195,7 @@ public class TemplateTransformer {
 			/*
 			 * Modify fragment.e4xmi, set GUIDs
 			 */
+			boolean isFragmente4XmiFile = fileTarget.getName().endsWith(FILE_FRAGMENT_E4XMI);
 			if(isFragmente4XmiFile) {
 				modifyApplicationModel(fileTarget);
 			}

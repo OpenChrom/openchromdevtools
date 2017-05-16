@@ -68,7 +68,7 @@ public class TemplateTransformer_Converter_1_ITest extends TestCase {
 		bundleInfo.setFileExtension("DFM");
 		bundleInfo.setLicense(license.toString());
 		//
-		String pathTemplateZIP = TestPathHelper.getAbsolutePath(TestPathHelper.TEMPLATE_PROCESSOR);
+		String pathTemplateZIP = TestPathHelper.getAbsolutePath(TestPathHelper.TEMPLATE_CONVERTER);
 		String pathTargetDirectory = TestPathHelper.getAbsolutePath(TestPathHelper.EXPORT_DIRECTORY);
 		//
 		BundleSpecification bundleSpecification = new BundleSpecification(bundleComposition, bundleInfo);

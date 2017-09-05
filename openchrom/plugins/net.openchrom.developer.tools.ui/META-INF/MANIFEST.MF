@@ -3,7 +3,7 @@ Eclipse-BundleShape: dir
 Bundle-ManifestVersion: 2
 Bundle-Name: Developer Tools
 Bundle-SymbolicName: net.openchrom.developer.tools.ui;singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.3.0.qualifier
 Bundle-Vendor: OpenChrom
 Require-Bundle: org.eclipse.core.resources,
  org.eclipse.ui,

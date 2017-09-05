@@ -51,6 +51,7 @@
   -->
   <modules>
     <module>../../plugins/net.openchrom.developer.tools.ui</module>
+    <!-- <module>../../plugins/net.openchrom.developer.tools.ui.fragment.test</module> -->
     <module>../../features/net.openchrom.developer.tools.feature</module>
     <module>../../sites/net.openchrom.developer.tools.updateSite</module>    
   </modules>

@@ -12,9 +12,16 @@
             name="New Processor"
             icon="icons/processor.png"
             category="net.openchrom.developer.tools.ui"
-            class="net.openchrom.developer.tools.ui.wizards.processor.ProcessorWizard"
+            class="net.openchrom.developer.tools.ui.wizards.WizardProcessor"
             id="net.openchrom.developer.tools.ui.wizards.ProcessorWizard">
       </wizard>
+      <wizard
+            name="New Converter"
+            icon="icons/converter.png"
+            category="net.openchrom.developer.tools.ui"
+            class="net.openchrom.developer.tools.ui.wizards.WizardConverter"
+            id="net.openchrom.developer.tools.ui.wizards.ConverterWizard">
+      </wizard>      
    </extension>
 
 </plugin>

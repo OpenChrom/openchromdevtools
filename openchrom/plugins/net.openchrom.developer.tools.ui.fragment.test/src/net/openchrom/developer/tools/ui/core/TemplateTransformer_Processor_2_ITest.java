@@ -41,7 +41,7 @@ public class TemplateTransformer_Processor_2_ITest extends TestCase {
 		String domainName = "net.openchrom";
 		String detectorType = "xxd";
 		String pluginType = "processor.supplier";
-		String pluginName = "chrom2d";
+		String pluginName = "projectmanager";
 		BundleComposition bundleComposition = new BundleComposition(domainName, detectorType, pluginType, pluginName);
 		/*
 		 * 
@@ -60,12 +60,12 @@ public class TemplateTransformer_Processor_2_ITest extends TestCase {
 		license.append(" *******************************************************************************/");
 		//
 		BundleInfo bundleInfo = new BundleInfo();
-		bundleInfo.setVersion("1.2.0");
+		bundleInfo.setVersion("1.3.0");
 		bundleInfo.setVendor("OpenChrom");
-		bundleInfo.setDescription("This processor helps to analyze two dimensional chromatograms.");
+		bundleInfo.setDescription("This is a project manager to run analytical tasks.");
 		bundleInfo.setWebsite("http://www.openchrom.net");
-		bundleInfo.setLabel("Chromatogram 2D");
-		bundleInfo.setFileExtension("o2d");
+		bundleInfo.setLabel("Project Manager");
+		bundleInfo.setFileExtension("opm");
 		bundleInfo.setLicense(license.toString());
 		//
 		String pathTemplateZIP = TestPathHelper.getAbsolutePath(TestPathHelper.TEMPLATE_PROCESSOR);

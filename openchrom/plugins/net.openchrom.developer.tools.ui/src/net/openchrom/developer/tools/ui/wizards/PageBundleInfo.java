@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017 Lablicate GmbH.
+ * Copyright (c) 2017, 2018 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -195,7 +195,7 @@ public class PageBundleInfo extends WizardPage {
 
 		StringBuilder license = new StringBuilder();
 		license.append("/*******************************************************************************\n");
-		license.append(" * Copyright (c) 2017 Lablicate GmbH.\n");
+		license.append(" * Copyright (c) 2017, 2018 Lablicate GmbH.\n");
 		license.append(" *\n");
 		license.append(" * All rights reserved. This program and the accompanying materials\n");
 		license.append(" * are made available under the terms of the Eclipse Public License v1.0\n");

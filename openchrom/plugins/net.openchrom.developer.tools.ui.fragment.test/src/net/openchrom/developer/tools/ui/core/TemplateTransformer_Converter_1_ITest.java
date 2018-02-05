@@ -39,9 +39,9 @@ public class TemplateTransformer_Converter_1_ITest extends TestCase {
 		 * 
 		 */
 		String domainName = "net.openchrom";
-		String detectorType = "wsd";
+		String detectorType = "csd";
 		String pluginType = "converter.supplier";
-		String pluginName = "camag";
+		String pluginName = "labjack";
 		BundleComposition bundleComposition = new BundleComposition(domainName, detectorType, pluginType, pluginName);
 		/*
 		 * 
@@ -60,20 +60,19 @@ public class TemplateTransformer_Converter_1_ITest extends TestCase {
 		license.append(" * GNU Affero General Public License for more details.\n");
 		license.append(" *\n");
 		license.append(" * You should have received a copy of the GNU Affero General Public License\n");
-		license.append(" * along with this program. If not, see <http://www.gnu.org/licenses/>.\n");
+		license.append(" * along with this program. If not, see http://www.gnu.org/licenses.\n");
 		license.append(" *\n");
 		license.append(" * Contributors:\n");
-		license.append(" *\n");
 		license.append(" * Dr. Philip Wenig - initial API and implementation\n");
 		license.append(" *******************************************************************************/");
 		//
 		BundleInfo bundleInfo = new BundleInfo();
 		bundleInfo.setVersion("1.3.0");
 		bundleInfo.setVendor("OpenChrom");
-		bundleInfo.setDescription("This converter reads CAMAG chromatograms.");
+		bundleInfo.setDescription("This converter reads LabJack chromatograms.");
 		bundleInfo.setWebsite("http://www.openchrom.net");
-		bundleInfo.setLabel("CAMAG Chromatogram Converter");
-		bundleInfo.setFileExtension("DFM");
+		bundleInfo.setLabel("LabJack Chromatogram Converter");
+		bundleInfo.setFileExtension("dat");
 		bundleInfo.setLicense(license.toString());
 		//
 		String pathTemplateZIP = TestPathHelper.getAbsolutePath(TestPathHelper.TEMPLATE_CONVERTER);

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Copyright (c) 2017 Lablicate GmbH.
+  Copyright (c) 2017, 2018 Lablicate GmbH.
 
   All rights reserved.
   This program and the accompanying materials are made available under the
@@ -29,8 +29,8 @@
   --> 
   <properties>
     <!-- VERSIONS -->
-    <tycho.version>1.0.0</tycho.version>
-    <tycho-extras.version>1.0.0</tycho-extras.version>
+    <tycho.version>1.1.0</tycho.version>
+    <tycho-extras.version>1.1.0</tycho-extras.version>
     <pmd.version>2.7.1</pmd.version>
     <checkstyle.version>2.9.1</checkstyle.version>
     <!-- IDS -->
